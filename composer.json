@@ -1,0 +1,19 @@
+{
+    "name": "thirtybees/tbcurrencyformatter",
+    "description": "Thirty bees module to automatically format currencies",
+    "require": {
+        "commerceguys/intl": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TbCurrencyFormatter\\" : "src/"
+        }
+    },
+    "license": "AFL-3.0",
+    "authors": [
+        {
+            "name": "Petr Hučík",
+            "email": "petr@thirtybees.com"
+        }
+    ]
+}
