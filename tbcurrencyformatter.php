@@ -229,8 +229,7 @@ class TbCurrencyFormatter extends Module
 
         // check that currency exists
         if ($this->currencyExists($currencyIso)) {
-            $currencyDecimals = (int)$currency->decimals ? Configuration::get('PS_PRICE_DISPLAY_PRECISION') : 0;
-            $price = Tools::ps_round($price, $currencyDecimals);
+            $price = Tools::ps_round($price, $this->getCurrencyDisplayPrecision($currency));
             $languageIso = $language->language_code;
             return $this->getFormatter()->format($price, $currencyIso, ['locale' => $languageIso]);
         }
@@ -302,5 +301,22 @@ class TbCurrencyFormatter extends Module
     protected function currencyExists($currencyIso)
     {
         return !!$this->getCurrencyRepository()->get($currencyIso);
+    }
+
+    /**
+     * @param Currency $currency
+     *
+     * @return int
+     * @throws PrestaShopException
+     */
+    protected function getCurrencyDisplayPrecision($currency)
+    {
+        if (method_exists($currency, 'getDisplayPrecision')) {
+            return $currency->getDisplayPrecision();
+        }
+        if ($currency->decimals) {
+            return (int)Configuration::get('PS_PRICE_DISPLAY_PRECISION');
+        }
+        return 0;
     }
 }
