@@ -72,7 +72,6 @@ class TbCurrencyFormatter extends Module
      * Module installation process
      *
      * @return bool
-     * @throws Adapter_Exception
      * @throws PrestaShopDatabaseException
      * @throws PrestaShopException
      */
@@ -135,7 +134,7 @@ class TbCurrencyFormatter extends Module
      * Used to save 'Auto Format' option to configuration table
      *
      * @param $params
-     * @throws HTMLPurifier_Exception
+     *
      * @throws PrestaShopException
      */
     public function hookActionAdminCurrenciesControllerSaveAfter($params)
@@ -189,6 +188,8 @@ class TbCurrencyFormatter extends Module
 
         $isoCode = $params['fields_value']['iso_code'];
         $currencyId = Currency::getIdByIsoCode($isoCode);
+
+        /** @noinspection PhpArrayWriteIsNotUsedInspection */
         $params['fields_value']['auto_format'] = !Configuration::get('TB_NO_AUTO_FORMAT_'.$currencyId);
     }
 
